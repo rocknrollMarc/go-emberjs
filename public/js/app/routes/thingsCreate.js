@@ -2,9 +2,9 @@
 App.ThingsCreateRoute = App.ThingCreateAndEditRoute.extend({
     model: function(){
         // the model for this route is a new empty Ember.Object
-        return Em.Object.create({});
+        return this.store.createRecord('thing');
     },
-    
+
     // in this case (the create route) we can re-use the thing/edit template
     // associated with the thingsCreateController
     renderTemplate: function(){

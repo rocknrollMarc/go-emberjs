@@ -14,13 +14,13 @@ App.ThingController = Ember.ObjectController.extend({
       this.set('deleteMode', false);
     },
     confirmDelete: function(){
-      // delete a thing
       this.get('model').deleteRecord();
       this.get('model').save();
-      // then transition to the ThingsRoute
-      this.transitionToRoute('things');
-      // set deleteMode back to false
-      this.set('deleteMode', false);
+
+      this.get('model').save().then(function() {
+        this.transitionToRoute('things');
+        this.set('deleteMode', false);
+      }.bind(this));
     }
   },
   edit: function(){

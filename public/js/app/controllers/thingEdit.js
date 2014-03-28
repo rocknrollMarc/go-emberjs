@@ -9,10 +9,9 @@ App.ThingEditController = Ember.ObjectController.extend({
   actions: {
     save: function(){
       var thing = this.get('model');
-      // this will save modifications we made while editing the thing
-      thing.save();
-      // then transition to ThingRoute
-      this.transitionToRoute('thing', thing);
+      thing.save().then(function() {
+        this.transitionToRoute('thing', thing);
+      }.bind(this));
     }
   }
 });

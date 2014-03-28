@@ -13,6 +13,10 @@ type Thing struct {
 	Description string `json:"description"`
 }
 
+type ThingJSON struct {
+	Thing Thing `json:"thing"`
+}
+
 func GetThing(id string) (thing Thing) {
 	db := DBOpen()
 	defer db.Close()
@@ -38,8 +42,13 @@ func (t *Thing) Create() (lastId int64) {
 	checkErr(err, "insert failed")
 	lastId, err = res.LastInsertId()
 	checkErr(err, "last id failed")
+	t.Id = lastId
 	return
 
+}
+
+func (t *Thing) IdToS() string {
+	return strconv.FormatInt(t.Id, 10)
 }
 
 func (t *Thing) Update() {
@@ -49,7 +58,7 @@ func (t *Thing) Update() {
 	stmtUpd, err := db.Prepare("update things set name = ?, description = ? where id = ?")
 	checkErr(err, "prepare update failed")
 	defer stmtUpd.Close()
-	_, err = stmtUpd.Exec(t.Name, t.Description, strconv.FormatInt(t.Id, 10))
+	_, err = stmtUpd.Exec(t.Name, t.Description, t.IdToS())
 	checkErr(err, "update failed")
 	return
 

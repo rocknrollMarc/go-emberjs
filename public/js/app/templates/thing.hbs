@@ -9,7 +9,7 @@
         <div class="tools aright">
             <button {{bind-attr class=":glyphicon :glyphicon-arrow-left :blue :fleft :btn-mobile"}} {{action "closeThingWithTransition" target="view"}}></button>
             <button {{bind-attr class=":glyphicon :glyphicon-trash :red deleteMode:active"}} {{action "delete"}} title="delete"></button>
-            {{#link-to 'thing.edit' }}<button {{bind-attr class=":glyphicon glyphicon-pencil editMode:active"}} title="edit"></button>{{/link-to}}
+            {{#link-to 'thing.edit' }}<button {{bind-attr class=":glyphicon :glyphicon-pencil editMode:active"}} title="edit"></button>{{/link-to}}
         </div>
 
         {{confirm-box action="confirmDelete" param=thing isVisible=deleteMode}}

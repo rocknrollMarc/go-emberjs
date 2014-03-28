@@ -1,7 +1,8 @@
 package main
 
 import (
-	"log"
+	"encoding/json"
+	"net/http"
 	"strconv"
 
 	"github.com/codegangsta/martini"
@@ -12,23 +13,32 @@ func ThingsIndexHandler(r render.Render) {
 	r.JSON(200, map[string]interface{}{"things": GetThings()})
 }
 
-func ThingsCreateHandler(thing Thing, r render.Render) {
-	id := thing.Create()
-	log.Printf("new thing created: %v", id)
-	r.JSON(200, GetThing(strconv.FormatInt(id, 10)))
+func ThingsCreateHandler(req *http.Request, r render.Render) {
+	var thingJSON ThingJSON
+	err := json.NewDecoder(req.Body).Decode(&thingJSON)
+	if err != nil {
+		panic(err)
+	}
+	thingJSON.Thing.Create()
+	r.JSON(200, map[string]interface{}{"thing": thingJSON.Thing})
 }
 
 func ThingsShowHandler(params martini.Params, r render.Render) {
-	log.Printf("show: %v", params["thingId"])
-	r.JSON(200, GetThing(params["thingId"]))
+	thing := GetThing(params["thingId"])
+	r.JSON(200, map[string]interface{}{"thing": thing})
 }
 
-func ThingsUpdateHandler(thing Thing, params martini.Params, r render.Render) {
-	id, err := strconv.ParseInt(params["thingId"], 10, 64)
+func ThingsUpdateHandler(req *http.Request, params martini.Params, r render.Render) {
+	var thingJSON ThingJSON
+	err := json.NewDecoder(req.Body).Decode(&thingJSON)
+	if err != nil {
+		panic(err)
+	}
 	checkErr(err, "oops")
-	thing.Id = id
-	thing.Update()
-	r.JSON(200, GetThing(strconv.FormatInt(thing.Id, 10)))
+	thisId, _ := strconv.ParseInt(params["thingId"], 0, 64)
+	thingJSON.Thing.Id = thisId
+	thingJSON.Thing.Update()
+	r.JSON(200, map[string]interface{}{"thing": thingJSON.Thing})
 }
 
 func ThingsDeleteHandler(params martini.Params, r render.Render) {
