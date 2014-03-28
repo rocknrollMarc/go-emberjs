@@ -1,6 +1,22 @@
-<ul>
-  {{#each thing in controller}}
-  <li>{{#link-to "thing" thing }} {{thing.name}} {{/link-to}} </li>
-  {{/each}}
-</ul>
+<h1 class="page-header">Things</h1>
 {{outlet}}
+{{#link-to "things.create" class="button blue create-btn"}}
+  <i class="glyphicon glyphicon-plus"></i><span>⬅ Add thing</span>
+{{/link-to}}
+<h2 class="sub-header">Other Things</h2>
+<div class="table-responsive">
+  <table class="table table-striped">
+    <thead>
+      <tr>
+        <th>Name</th>
+      </tr>
+    </thead>
+    <tbody>
+    {{#each thing in controller}}
+    <tr>
+      <td>{{#link-to "thing" thing }} {{thing.name}} {{/link-to}} </td>
+    </tr>
+    {{/each}}
+    </tbody>
+  </table>
+</div>
