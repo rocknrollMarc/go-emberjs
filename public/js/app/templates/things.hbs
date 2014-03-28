@@ -1,0 +1,6 @@
+<ul>
+  {{#each thing in controller}}
+  <li>{{#link-to "thing" thing }} {{thing.name}} {{/link-to}} </li>
+  {{/each}}
+</ul>
+{{outlet}}
