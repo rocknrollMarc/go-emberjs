@@ -5,6 +5,7 @@ App.ThingController = Ember.ObjectController.extend({
   editMode: false,
 
   deleteMode: false,
+  needs: ['thing'],
 
   actions: {
     delete: function(){
@@ -15,8 +16,6 @@ App.ThingController = Ember.ObjectController.extend({
     },
     confirmDelete: function(){
       this.get('model').deleteRecord();
-      this.get('model').save();
-
       this.get('model').save().then(function() {
         this.transitionToRoute('things');
         this.set('deleteMode', false);

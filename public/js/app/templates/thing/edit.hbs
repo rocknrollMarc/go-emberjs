@@ -1,20 +1,15 @@
 {{#view App.DraggableView}}
 
-    {{! again here use the editMode property to switch class names between "shown" and "hidden" }}
-    <div {{bind-attr class=":thing-edit :pane controllers.thing.editMode:shown:hidden"}}>
-        <div class="tools">
-            <button class="glyphicon glyphicon-arrow-left blue fleft btn-mobile" {{action "closeThingWithTransition" target="view"}}></button>
+    <div {{bind-attr class=":panel :panel-default controllers.thing.editMode:show:hidden"}}>
+        <div class="panel-heading">
+          {{input value=model.name}}
         </div>
-        <div class="line">
-            <label for="name">Thing name</label>
-            {{input value=model.name}}
+        <div class='panel-body'>
+          {{input value=model.description}}
         </div>
-        <div class="line">
-            <label for="description">Thing Description</label>
-            {{input value=model.description}}
-        </div>
-        <div class="aright">
-            <button class="blue btn-desktop" {{action "save"}} title="save"> save </button>
+        <div class='panel-footer'>
+            <button class="btn btn-default" {{action "save"}} title="save"> save </button>
+            <button class="btn btn-default" {{action "cancelEdit"}} title="cancel"> cancel</button>
         </div>
     </div>
 

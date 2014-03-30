@@ -41,8 +41,8 @@ func ThingsUpdateHandler(req *http.Request, params martini.Params, r render.Rend
 	r.JSON(200, map[string]interface{}{"thing": thingJSON.Thing})
 }
 
-func ThingsDeleteHandler(params martini.Params, r render.Render) {
+func ThingsDeleteHandler(params martini.Params, w http.ResponseWriter) {
 	thing := GetThing(params["thingId"])
 	thing.Delete()
-	r.JSON(200, "ok")
+	w.WriteHeader(http.StatusNoContent)
 }

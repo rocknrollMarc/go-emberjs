@@ -12,6 +12,10 @@ App.ThingEditController = Ember.ObjectController.extend({
       thing.save().then(function() {
         this.transitionToRoute('thing', thing);
       }.bind(this));
+    },
+    cancelEdit: function(){
+      this.setProperties({ 'editMode': false, 'deleteMode': false });
+      this.transitionToRoute('thing', this.get('model'));
     }
   }
 });

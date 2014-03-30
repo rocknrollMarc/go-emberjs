@@ -1,20 +1,25 @@
-<h1 class="page-header">Things</h1>
+<h1 class="page-header">
+  Things
+  {{#link-to "things.create" class=""}}
+    <i class="glyphicon glyphicon-plus"></i>
+  {{/link-to}}
+</h1>
 {{outlet}}
-{{#link-to "things.create" class="button blue create-btn"}}
-  <i class="glyphicon glyphicon-plus"></i><span>⬅ Add thing</span>
-{{/link-to}}
-<h2 class="sub-header">Other Things</h2>
 <div class="table-responsive">
   <table class="table table-striped">
     <thead>
       <tr>
+        <th>#</th>
         <th>Name</th>
+        <th>Action</th>
       </tr>
     </thead>
     <tbody>
     {{#each thing in controller}}
     <tr>
-      <td>{{#link-to "thing" thing }} {{thing.name}} {{/link-to}} </td>
+      <td>{{thing.id}}</td>
+      <td>{{thing.name}}</td>
+      <td>{{#link-to "thing" thing }} Show {{/link-to}} </td>
     </tr>
     {{/each}}
     </tbody>

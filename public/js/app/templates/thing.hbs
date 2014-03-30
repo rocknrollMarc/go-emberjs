@@ -1,21 +1,18 @@
 {{! the DraggableView behaviors are enabled in the mobile version }}
 {{#view App.DraggableView}}
 
-    {{! "thing-profile" and "pane" are static class names }}
-    {{! if "editMode" is true, "scaleout" will be printed }}
-    {{! if "editMode" is false, then "scalein" will be printed }}
-    {{! http://emberjs.com/guides/templates/binding-element-class-names/#toc_binding-to-boolean-values }}
-    <div {{bind-attr class=":thing-profile :pane editMode:scaleout:flipin"}}>
-        <div class="tools aright">
-            <button {{bind-attr class=":glyphicon :glyphicon-arrow-left :blue :fleft :btn-mobile"}} {{action "closeThingWithTransition" target="view"}}></button>
-            <button {{bind-attr class=":glyphicon :glyphicon-trash :red deleteMode:active"}} {{action "delete"}} title="delete"></button>
-            {{#link-to 'thing.edit' }}<button {{bind-attr class=":glyphicon :glyphicon-pencil editMode:active"}} title="edit"></button>{{/link-to}}
+    <div {{bind-attr class=":panel :panel-default controllers.thing.editMode:hidden:show"}}>
+        <div class="panel-heading">
+          <h3 class='panel-title'>{{name}}</h3>
         </div>
-
-        {{confirm-box action="confirmDelete" param=thing isVisible=deleteMode}}
-
-        <h2>{{name}}</h2>
-        <p>{{description}}</p>
+        <div class='panel-body'>
+          {{confirm-box action="confirmDelete" param=thing isVisible=deleteMode}}
+          <p>{{description}}</p>
+        </div>
+        <div class='panel-footer'>
+          <button {{bind-attr class=":btn :btn-default :glyphicon :glyphicon-trash deleteMode:active"}} {{action "delete"}} title="delete"></button>
+          {{#link-to 'thing.edit' }}<button {{bind-attr class=":btn :btn-default :glyphicon :glyphicon-pencil editMode:active"}} title="edit"></button>{{/link-to}}
+        </div>
     </div>
 {{/view}}
 
