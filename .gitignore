@@ -1,4 +1,5 @@
 gin-bin
+go-emberjs
 node_modules
 public/js/app.js
 public/js/libs.js
