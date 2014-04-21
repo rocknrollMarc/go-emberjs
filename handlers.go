@@ -1,6 +1,7 @@
 package main
 
 import (
+	"database/sql"
 	"encoding/json"
 	"net/http"
 	"strconv"
@@ -9,40 +10,40 @@ import (
 	"github.com/martini-contrib/render"
 )
 
-func ThingsIndexHandler(r render.Render) {
-	r.JSON(200, map[string]interface{}{"things": GetThings()})
+func BlogsIndexHandler(db *sql.DB, r render.Render) {
+	r.JSON(200, map[string]interface{}{"blogs": GetBlogs(db)})
 }
 
-func ThingsCreateHandler(req *http.Request, r render.Render) {
-	var thingJSON ThingJSON
-	err := json.NewDecoder(req.Body).Decode(&thingJSON)
+func BlogsCreateHandler(req *http.Request, r render.Render, db *sql.DB) {
+	var blogJSON BlogJSON
+	err := json.NewDecoder(req.Body).Decode(&blogJSON)
 	if err != nil {
 		panic(err)
 	}
-	thingJSON.Thing.Create()
-	r.JSON(200, map[string]interface{}{"thing": thingJSON.Thing})
+	blogJSON.Blog.Create(db)
+	r.JSON(200, map[string]interface{}{"blog": blogJSON.Blog})
 }
 
-func ThingsShowHandler(params martini.Params, r render.Render) {
-	thing := GetThing(params["thingId"])
-	r.JSON(200, map[string]interface{}{"thing": thing})
+func BlogsShowHandler(db *sql.DB, params martini.Params, r render.Render) {
+	blog := GetBlog(db, params["blogId"])
+	r.JSON(200, map[string]interface{}{"blog": blog})
 }
 
-func ThingsUpdateHandler(req *http.Request, params martini.Params, r render.Render) {
-	var thingJSON ThingJSON
-	err := json.NewDecoder(req.Body).Decode(&thingJSON)
+func BlogsUpdateHandler(db *sql.DB, req *http.Request, params martini.Params, r render.Render) {
+	var blogJSON BlogJSON
+	err := json.NewDecoder(req.Body).Decode(&blogJSON)
 	if err != nil {
 		panic(err)
 	}
 	checkErr(err, "oops")
-	thisId, _ := strconv.ParseInt(params["thingId"], 0, 64)
-	thingJSON.Thing.Id = thisId
-	thingJSON.Thing.Update()
-	r.JSON(200, map[string]interface{}{"thing": thingJSON.Thing})
+	thisId, _ := strconv.ParseInt(params["blogId"], 0, 64)
+	blogJSON.Blog.Id = thisId
+	blogJSON.Blog.Update(db)
+	r.JSON(200, map[string]interface{}{"blog": blogJSON.Blog})
 }
 
-func ThingsDeleteHandler(params martini.Params, w http.ResponseWriter) {
-	thing := GetThing(params["thingId"])
-	thing.Delete()
+func BlogsDeleteHandler(db *sql.DB, params martini.Params, w http.ResponseWriter) {
+	blog := GetBlog(db, params["blogId"])
+	blog.Delete(db)
 	w.WriteHeader(http.StatusNoContent)
 }

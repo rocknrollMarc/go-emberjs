@@ -1,6 +1,6 @@
 App.Router.map(function() {
-  this.resource('things', function(){
-    this.resource('thing', { path:'/:thing_id' }, function(){
+  this.resource('blogs', function(){
+    this.resource('blog', { path:'/:blog_id' }, function(){
       this.route('edit');
     });
     this.route('create');
@@ -10,6 +10,6 @@ App.Router.map(function() {
 
 App.MissingRoute = Em.Route.extend({
   redirect: function(){
-    this.transitionTo('things.index');
+    this.transitionTo('blogs.index');
   }
 });

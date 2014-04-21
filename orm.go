@@ -3,16 +3,21 @@ package main
 import (
 	"database/sql"
 
-	_ "github.com/go-sql-driver/mysql"
+	"github.com/codegangsta/martini"
+	_ "github.com/mattn/go-sqlite3"
 )
 
-func DBOpen() (conn *sql.DB) {
-	conn, err := sql.Open("mysql", "root:@/things_development")
-	checkErr(err, "sql.Open failed")
-	return
-}
+func DB() martini.Handler {
+	var db *sql.DB
+	var err error
+	db, err = sql.Open("sqlite3", ":memory:")
+	if err != nil {
+		panic(err)
+	}
+	PrepareSqlite(db)
 
-func DBClose(conn *sql.DB) {
-	conn.Close()
-	return
+	return func(c martini.Context) {
+		c.Map(db)
+		c.Next()
+	}
 }

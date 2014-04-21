@@ -15,10 +15,11 @@ func checkErr(err error, msg string) {
 func main() {
 	m := martini.Classic()
 	m.Use(render.Renderer())
-	m.Get("/api/things", ThingsIndexHandler)
-	m.Get("/api/things/:thingId", ThingsShowHandler)
-	m.Put("/api/things/:thingId", ThingsUpdateHandler)
-	m.Post("/api/things", ThingsCreateHandler)
-	m.Delete("/api/things/:thingId", ThingsDeleteHandler)
+	m.Use(DB())
+	m.Get("/api/blogs", BlogsIndexHandler)
+	m.Get("/api/blogs/:blogId", BlogsShowHandler)
+	m.Put("/api/blogs/:blogId", BlogsUpdateHandler)
+	m.Post("/api/blogs", BlogsCreateHandler)
+	m.Delete("/api/blogs/:blogId", BlogsDeleteHandler)
 	m.Run()
 }

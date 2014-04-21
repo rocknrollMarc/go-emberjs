@@ -6,7 +6,7 @@ App.ApplicationRoute = Em.Route.extend({
             this.controllerFor(name).set('modalVisible', true);
         },
         goBack: function(){
-            this.transitionTo('things');
+            this.transitionTo('blogs');
         }
     }
 });

@@ -1,0 +1,16 @@
+{{#view App.DraggableView}}
+
+    <div {{bind-attr class=":panel :panel-default controllers.blog.editMode:show:hidden"}}>
+        <div class="panel-heading">
+          {{input value=model.name}}
+        </div>
+        <div class='panel-body'>
+          {{input value=model.description}}
+        </div>
+        <div class='panel-footer'>
+            <button class="btn btn-default" {{action "save"}} title="save"> save </button>
+            <button class="btn btn-default" {{action "cancel"}} title="cancel"> cancel</button>
+        </div>
+    </div>
+
+{{/view}}

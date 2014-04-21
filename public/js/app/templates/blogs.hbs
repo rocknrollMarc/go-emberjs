@@ -1,0 +1,27 @@
+<h1 class="page-header">
+  Blogs
+  {{#link-to "blogs.create" class=""}}
+    <i class="glyphicon glyphicon-plus"></i>
+  {{/link-to}}
+</h1>
+{{outlet}}
+<div class="table-responsive">
+  <table class="table table-striped">
+    <thead>
+      <tr>
+        <th>#</th>
+        <th>Title</th>
+        <th>Action</th>
+      </tr>
+    </thead>
+    <tbody>
+    {{#each blog in controller}}
+    <tr>
+      <td>{{blog.id}}</td>
+      <td>{{blog.title}}</td>
+      <td>{{#link-to "blog" blog }} Show {{/link-to}} </td>
+    </tr>
+    {{/each}}
+    </tbody>
+  </table>
+</div>
