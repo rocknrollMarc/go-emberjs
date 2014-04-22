@@ -3,7 +3,6 @@ App.BlogsCreateController = Ember.Controller.extend({
 
   actions: {
     save: function () {
-      // create a new blog and save it
       this.get('model').save().then(function() {
         this.transitionToRoute('index');
       }.bind(this));

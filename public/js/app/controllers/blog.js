@@ -1,7 +1,4 @@
 App.BlogController = Ember.ObjectController.extend({
-  // editMode / deleteMode properties are used in the blog template
-  // we use them to manage css transitions when entering and exiting the edit route
-  // see also the BlogCreateAndEditRoute for more
   editMode: false,
 
   deleteMode: false,
